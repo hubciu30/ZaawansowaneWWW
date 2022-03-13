@@ -16,7 +16,9 @@ app.use(express.static(__dirname+"/app/public"))
 // API import
 require('./app/api/v1/login.js')(app);
 require('./app/api/v1/signup.js')(app);
+require('./app/api/v1/logout.js')(app);
 require('./app/api/v1/home.js')(app);
+
 
 
 app.get('/', (req, res) => {

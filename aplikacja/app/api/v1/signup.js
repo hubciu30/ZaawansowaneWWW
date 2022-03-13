@@ -1,10 +1,13 @@
 const crypto = require('crypto');
 const {home_path} = require('../../config')
+const auth = require('../../middlewares/auth');
 module.exports = (app) =>
 {
-    app.get('/signup', (req, res)=>{
-        console.log(req.query)
-        res.sendFile(home_path+'/views/signup.html')
+    app.get('/signup', auth, (req, res)=>{
+        if(req.cache.islogged){res.redirect('/home');}
+        else{
+            res.sendFile(home_path+'/views/signup.html');
+        }
     });
 
     app.post('/signup', async (req, res)=>{
@@ -21,7 +24,8 @@ module.exports = (app) =>
                 if(response.length === 0){
                     response = await db.query('INSERT INTO `users` (`id`, `username`, `password`, `salt`, `create_time`, `last_login_time`) VALUES (NULL, ?, ?, ?, ?, ?)', [req.body.login, hash, salt, time, 0,])
                     response = await db.query('INSERT INTO `roles` (`id`, `user_id`, `name`, `power`) VALUES (NULL, ?, ?, ?)', [response.insertId, "User", 1]);
-                    res.sendStatus(200);
+                    //res.sendStatus(200);
+                    res.statusCode(201).redirect('/login');
                 }
                 else{
                     res.redirect('/signup?status=2');
