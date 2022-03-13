@@ -53,5 +53,42 @@ db.Users.get = (id, username) =>{
     });
 } 
 
+// Session section
+db.Session = {};
+// get session by token
+db.Session.get = (token) =>{
+    let sql_string = "SELECT * FROM `sessions` WHERE `token`=?";
+    let arguments = [token]
+    return new Promise((resolve, reject) => {
+        pool.query(sql_string, arguments, (error, data) =>{
+            if(error){reject(error);}
+            return resolve(data);
+        })
+    });
+};
+// create new session
+db.Session.create = (userID, token, createTime, expireTime, ip, userAgent) =>{
+    let sql_string = "INSERT INTO `sessions` (`id`, `user_id`, `token`, `create_time`, `expire_time`, `ip`, `user_agent`, `active`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?) ";
+    let arguments = [userID, token, createTime, expireTime, ip, userAgent, 1];
+    return new Promise((resolve, reject) => {
+        pool.query(sql_string, arguments, (error, data) =>{
+            if(error){reject(error);}
+            return resolve(data);
+        })
+    });
+}
+// cancel session
+db.Session.cancel = (token)=>{
+    let sql_string = "UPDATE `sessions` SET `active`=? WHERE `token`=?";
+    let arguments = [0, token]
+    return new Promise((resolve, reject) => {
+        pool.query(sql_string, arguments, (error, data) =>{
+            if(error){reject(error);}
+            return resolve(data);
+        })
+    });
+}
+
+
 
 module.exports = db
