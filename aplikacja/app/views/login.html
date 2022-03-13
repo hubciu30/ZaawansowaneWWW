@@ -10,19 +10,19 @@
   </head>
 
   <body>
-    <div class="nav"><h1>Rejestracja</h1></div>
+    <div class="nav"><h1>Logowanie</h1></div>
     <div class="main">
       <div class="form-container">
-        <form class="form-signup" action="/signup" method="post">
+        <form class="form-login" action="/login" method="post">
             <label>Nazwa użytkownika</label>
             <input name="login" type="text" required/>
             <label>Hasło</label>
             <input name="password" type="password" required/>
-            <div class="form-signup-button-containter">
+            <div class="form-login-button-containter">
               <button type="submit">Wyślij</button>
             </div>
-            <div class="form-signup-login">
-              <a href = "/login">Masz już konto? Zaloguj się.</a>
+            <div class="form-login-login">
+              <a href = "/signup">Nie masz jeszcze konta? Stwórz je.</a>
             </div>
         </form>
       </div>
