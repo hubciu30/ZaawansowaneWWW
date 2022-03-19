@@ -5,7 +5,8 @@ Do działania aplikacji potrzebe jest środowisko NodeJS
 
 Do zainstalowania zależności: **npm install**
 
-# Plik konfiguracyjny ".env" powinien znajdować się w katalogu "aplikacja"
+# Plik konfiguracyjny ".env"
+Plik .env powinien znajdować się w katalogu "aplikacja"
 | Key  | Value |
 | ------------- | ------------- |
 | PORT  | 3000  |
