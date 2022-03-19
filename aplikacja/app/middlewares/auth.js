@@ -25,7 +25,6 @@ module.exports = async (req, res, next) =>
                                 req.cache.token = token;
                                 req.cache.user_id = session.user_id;
                             }
-                            
                         }
                     }
                 }catch(e){
