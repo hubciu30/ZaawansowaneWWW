@@ -6,7 +6,7 @@ module.exports = (app)=>
         try{
             const db = require('../../database/database');
             await db.Session.cancel(req.cache.token);
-            res.cookie('session','null',{maxAge:0}); 
+            res.cookie('session','null',{maxAge:0, httpOnly: true});
             res.redirect("/login");
         }
         catch(e){
