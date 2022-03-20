@@ -48,4 +48,43 @@ module.exports = (app)=>
             res.sendStatus(403);
         }
     });
+
+    app.post('/categories', auth, privileges, async (req, res) =>
+    {
+        if(req.cache.islogged && req.cache.roles.length>0)
+        {
+            const data = req.cache.roles?.find(item => item.name.toLowerCase()==="admin");
+            if(data)
+            {
+                if(req.body.name)
+                {
+                    try
+                    {
+                        const db = require('../../database/database');
+                        let response = await db.Categories.getByName(req.body.name);
+                        if(response.length === 0){
+                            response = await db.Categories.create(req.body.name, Date.now(), null);
+                            res.sendStatus(200);
+                        }
+                        else{
+                            res.sendStatus(401);
+                        }
+                    }
+                    catch(e){
+                        console.log(e);
+                        res.sendStatus(500);
+                    }
+                }else{
+                    res.sendStatus(400);
+                }
+            }else{
+                res.sendStatus(403);
+            }
+        }
+        else
+        {
+            res.sendStatus(403);
+        }
+    });
+
 }

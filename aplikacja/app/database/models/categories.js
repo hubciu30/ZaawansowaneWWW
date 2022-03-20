@@ -25,5 +25,28 @@ module.exports = (pool) =>{
         });
     }
 
+    // get category by name
+    Categories.getByName = (categoryName)=>{
+        let sql_string = "SELECT * FROM `categories` WHERE `name`=?";
+        let arguments = [categoryName]
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    }
+
+    Categories.create = (name, create_time, last_post_time)=>{
+        let sql_string = 'INSERT INTO `categories` (`id`, `name`, `create_time`, `last_post_time`) VALUES (NULL, ?, ?, ?)';
+        let arguments = [name, create_time, "0"]
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    }
+
     return Categories;
 }

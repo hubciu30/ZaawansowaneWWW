@@ -48,5 +48,17 @@ module.exports = (pool) =>{
         });
     }
 
+    // create new post
+    Posts.create = (user_id, topic_id, content, create_time) =>{
+        let sql_string = 'INSERT INTO `posts` (`id`, `user_id`, `topic_id`, `content`, `create_time`) VALUES (NULL, ?, ?, ?, ?)';
+        let arguments = [user_id, topic_id, content, create_time]
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    }
+
     return Posts;
 }

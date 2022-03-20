@@ -26,7 +26,7 @@ module.exports = (pool) =>{
     }
 
     // get topics by userID
-    Topics.getByID = (userID)=>{
+    Topics.getByUserID = (userID)=>{
         let sql_string = "SELECT * FROM `topics` WHERE `user_id`=?";
         let arguments = [userID]
         return new Promise((resolve, reject) => {
@@ -37,5 +37,16 @@ module.exports = (pool) =>{
         });
     }
 
+    // create new topic
+    Topics.create = (category_id, user_id, title, create_time) =>{
+        let sql_string = 'INSERT INTO `topics` (`id`, `categorie_id`, `user_id`, `title`, `create_time`) VALUES (NULL, ?, ?, ?, ?)';
+        let arguments = [category_id, user_id, title, create_time]
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    }
     return Topics;
 }
