@@ -1,6 +1,5 @@
 const crypto = require('crypto');
-const {home_path} = require('../../config')
-const auth = require('../../middlewares/auth');
+
 module.exports = (app) =>
 {
     app.post('/api/signup', async (req, res)=>{

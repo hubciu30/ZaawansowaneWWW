@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const {home_path, session_duration} = require('../../config');
+const {session_duration} = require('../../config');
 const auth = require('../../middlewares/auth');
 module.exports = (app) =>
 {

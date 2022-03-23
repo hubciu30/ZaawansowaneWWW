@@ -1,0 +1,47 @@
+body
+{
+    background-color: rgb(42, 42, 42);
+    color: rgb(200,200,200);
+    margin: 0;
+}
+
+.nav{
+    background-color: rgb(32,32,32);
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.main
+{
+    display: flex;
+    justify-content: center;
+}
+
+.table{
+    margin: 10px;
+    font-size: larger;
+    color: rgb(230, 230, 230);
+}
+
+.table-head{
+    border-bottom: 2px solid rgb(133, 133, 133);
+    padding: 8px;
+}
+
+.table-head th{
+    padding: 10px;
+}
+
+.table-tr{
+    border-bottom: 1px solid #ddd;
+}
+.table-tr td{
+    text-align: center;
+    padding: 20px;
+}
+
+.table-action-button{
+    cursor: pointer;
+    
+}
