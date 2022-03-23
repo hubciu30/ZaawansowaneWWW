@@ -3,14 +3,7 @@ const {home_path} = require('../../config')
 const auth = require('../../middlewares/auth');
 module.exports = (app) =>
 {
-    app.get('/signup', auth, (req, res)=>{
-        if(req.cache.islogged){res.redirect('/home');}
-        else{
-            res.sendFile(home_path+'/views/signup.html');
-        }
-    });
-
-    app.post('/signup', async (req, res)=>{
+    app.post('/api/signup', async (req, res)=>{
         console.log(req.body)
         if(req.body.login && req.body.password && req.body.login.length > 2){
             const db = require('../../database/database');

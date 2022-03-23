@@ -3,7 +3,7 @@ const auth = require('../../middlewares/auth');
 const privileges = require('../../middlewares/privileges');
 module.exports = (app)=>
 {
-    app.get('/users', auth, privileges, async (req, res) =>
+    app.get('/api/users', auth, privileges, async (req, res) =>
     {
         if(req.cache.islogged)
         {
@@ -29,7 +29,7 @@ module.exports = (app)=>
         }
     });
 
-    app.get('/users/:id', auth, async (req, res) =>
+    app.get('/api/users/:id', auth, async (req, res) =>
     {
         if(req.cache.islogged)
         {
@@ -56,7 +56,7 @@ module.exports = (app)=>
         }
     });
 
-    app.post('/users', auth, privileges, async (req, res) =>{
+    app.post('/api/users', auth, privileges, async (req, res) =>{
         if(req.cache.islogged && req.cache.roles.length>0){
             const data = req.cache.roles?.find(item => item.name.toLowerCase()==="admin");
             if(data)

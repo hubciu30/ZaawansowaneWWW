@@ -2,7 +2,7 @@ const auth = require('../../middlewares/auth');
 const privileges = require('../../middlewares/privileges');
 module.exports = (app)=>
 {
-    app.get('/categories', auth, privileges, async (req, res) =>
+    app.get('/api/categories', auth, privileges, async (req, res) =>
     {
         if(req.cache.islogged && req.cache.roles.length>0)
         {
@@ -23,7 +23,7 @@ module.exports = (app)=>
         }
     });
 
-    app.get('/categories/:id', auth, async (req, res) =>
+    app.get('/api/categories/:id', auth, async (req, res) =>
     {
         if(req.cache.islogged)
         {
@@ -49,7 +49,7 @@ module.exports = (app)=>
         }
     });
 
-    app.post('/categories', auth, privileges, async (req, res) =>
+    app.post('/api/categories', auth, privileges, async (req, res) =>
     {
         if(req.cache.islogged && req.cache.roles.length>0)
         {
