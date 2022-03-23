@@ -16,12 +16,15 @@ app.use(express.static(__dirname+"/app/public"))
 require('./app/api/v1/login')(app);
 require('./app/api/v1/signup')(app);
 require('./app/api/v1/logout')(app);
-require('./app/api/v1/home')(app);
 require('./app/api/v1/users')(app);
 require('./app/api/v1/categories')(app);
 require('./app/api/v1/topics')(app);
 require('./app/api/v1/posts')(app);
 
+// Routing import
+require('./app/routing/login')(app);
+require('./app/routing/signup')(app);
+require('./app/routing/home')(app);
 
 app.get('/', (req, res) => {
   res.redirect('/home');
