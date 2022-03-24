@@ -47,6 +47,19 @@ module.exports = (pool) =>{
             })
         });
     }
+    // update object
+    Categories.update = {};
+    // update name
+    Categories.update.name = (id, name) =>{
+        let sql_string = 'UPDATE `categories` SET `name` = ? WHERE `categories`.`id` = ?';
+        let arguments = [name, id];
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    }
 
     return Categories;
 }

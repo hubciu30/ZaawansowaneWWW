@@ -60,5 +60,32 @@ module.exports = (pool) =>{
         });
     }
 
+    // Update object
+    Posts.update = {};
+
+    // Update content
+    Posts.update.content = (id, content) =>{
+        let sql_string = 'UPDATE `posts` SET `content` = ? WHERE `id` = ?';
+        let arguments = [content, id]
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    }
+
+    // Update rating
+    Posts.update.rating = (id, rating) =>{
+        let sql_string = 'UPDATE `posts` SET `rating` = ? WHERE `id` = ?';
+        let arguments = [rating, id]
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    }
+
     return Posts;
 }

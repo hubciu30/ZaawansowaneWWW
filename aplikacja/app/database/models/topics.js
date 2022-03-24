@@ -48,5 +48,21 @@ module.exports = (pool) =>{
             })
         });
     }
+
+    // Update object
+    Topics.update = {};
+
+    // Update title
+    Topics.update.title = (id, title) =>{
+        let sql_string = 'UPDATE `topics` SET `title` = ? WHERE `id` = ?';
+        let arguments = [title, id]
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    }
+
     return Topics;
 }
