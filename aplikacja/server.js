@@ -20,6 +20,8 @@ require('./app/api/v1/users')(app);
 require('./app/api/v1/categories')(app);
 require('./app/api/v1/topics')(app);
 require('./app/api/v1/posts')(app);
+require('./app/api/v1/sessions')(app);
+require('./app/api/v1/roles')(app);
 
 // Routing import
 require('./app/routing/login')(app);

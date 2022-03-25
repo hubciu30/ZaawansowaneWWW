@@ -1,5 +1,18 @@
 module.exports = (pool) =>{
     const Sessions = {};
+
+    // get sessions by id
+    Sessions.getByID = (id) =>{
+        let sql_string = "SELECT * FROM `sessions` WHERE `id`=?";
+        let arguments = [id]
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    };
+
     // get sessions by userID
     Sessions.getByUserID = (userID) =>{
         let sql_string = "SELECT * FROM `sessions` WHERE `user_id`=?";
@@ -34,7 +47,7 @@ module.exports = (pool) =>{
             })
         });
     }
-    // cancel session
+    // cancel session by token
     Sessions.cancel = (token)=>{
         let sql_string = "UPDATE `sessions` SET `active`=? WHERE `token`=?";
         let arguments = [0, token]
@@ -45,5 +58,30 @@ module.exports = (pool) =>{
             })
         });
     }
+
+    // cancel all active sessions
+    Sessions.cancelAll = ()=>{
+        let sql_string = "UPDATE `sessions` SET `active`=? WHERE `active`=?";
+        let arguments = [0, 1];
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    }
+
+    // delete session by id
+    Sessions.delete = (id) => {
+        let sql_string =  "DELETE FROM sessions WHERE `sessions`.`id` = ?";
+        let arguments = [id]
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    }
+
     return Sessions;
 }
