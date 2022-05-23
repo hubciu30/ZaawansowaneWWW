@@ -32,6 +32,13 @@ module.exports = (app)=>
                 const db = require('../../database/database');
                 let response = await db.Topics.getByID(req.params.id);
                 if(response.length>0){
+                    let posts = await db.Posts.getByTopicID(req.params.id);
+                    let ans = [];
+                    for(let item of posts){
+                        ans.push(req.protocol +"://"+req.get('host')+"/api/posts/"+item.id);
+                    }
+                    let ans_data = response[0];
+                    ans_data.posts = ans; 
                     res.status(200).json(response[0]);
                 }
                 else{

@@ -10,6 +10,11 @@ module.exports = (app)=>
             {
                 const db = require('../../database/database');
                 let response = await db.Posts.get();
+
+                if(req.query.from && req.query.to){
+                    response = response.filter(item => item.create_time > req.query.from && item.create_time < req.query.to);
+                }
+
                 res.status(200).json(response);
             }
             catch(e){

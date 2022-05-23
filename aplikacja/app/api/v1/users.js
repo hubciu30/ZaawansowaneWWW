@@ -16,7 +16,15 @@ module.exports = (app)=>
                     const {id, username, create_time, last_login_time, reputation} = item;
                     data.push({id, username, create_time, last_login_time, reputation});
                 }
-                res.status(200).json(data);
+                let new_data = []
+                if(req.query.start && req.query.limit){
+                    new_data = data.slice(req.query.start, req.query.limit);
+                }
+                else{
+                    new_data = data;
+                }
+
+                res.status(200).json(new_data);
             }
             catch(e){
                 console.log(e);

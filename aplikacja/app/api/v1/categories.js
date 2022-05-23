@@ -32,7 +32,14 @@ module.exports = (app)=>
                 const db = require('../../database/database');
                 let response = await db.Categories.getByID(req.params.id);
                 if(response.length>0){
-                    res.status(200).json(response[0]);
+                    let topics = await db.Topics.getByCategorieID(req.params.id);
+                    let ans = [];
+                    for(let item of topics){
+                        ans.push(req.protocol +"://"+req.get('host')+"/api/topics/"+item.id);
+                    }
+                    let ans_data = response[0];
+                    ans_data.topics = ans; 
+                    res.status(200).json(ans_data);
                 }
                 else{
                     res.sendStatus(404);
