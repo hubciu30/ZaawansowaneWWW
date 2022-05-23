@@ -37,6 +37,18 @@ module.exports = (pool) =>{
         });
     }
 
+    // get topics by categoriesID
+    Topics.getByCategorieID = (categorieID)=>{
+        let sql_string = "SELECT * FROM `topics` WHERE `categorie_id`=?";
+        let arguments = [categorieID]
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    }
+
     // create new topic
     Topics.create = (category_id, user_id, title, create_time) =>{
         let sql_string = 'INSERT INTO `topics` (`id`, `categorie_id`, `user_id`, `title`, `create_time`) VALUES (NULL, ?, ?, ?, ?)';

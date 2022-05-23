@@ -38,7 +38,7 @@ module.exports = (pool) =>{
 
     // get all posts by topic id
     Posts.getByTopicID = (topicID)=>{
-        let sql_string = "SELECT * FROM `roles` WHERE `topic_id`=?";
+        let sql_string = "SELECT * FROM `posts` WHERE `topic_id`=?";
         let arguments = [topicID]
         return new Promise((resolve, reject) => {
             pool.query(sql_string, arguments, (error, data) =>{
