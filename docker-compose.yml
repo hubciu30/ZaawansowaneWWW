@@ -1,0 +1,54 @@
+version: '3.8'
+services:
+  hubforum-db:
+    container_name: hubforum-db
+    image: 'mysql:8.0'
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$DATABASE_PASSWORD
+      - MYSQL_DATABASE=$DATABASE_NAME
+    ports:
+      - $DATABASE_PORT:$DATABASE_PORT
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - hubnetwork
+
+  hubforum-app:
+    container_name: hubforum-app
+    depends_on:
+      - hubforum-db
+    build: ./aplikacja
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - $PORT_LOCAL:$PORT_DOCKER
+    environment:
+      - DATABASE_HOST=hubforum-db
+      - DATABASE_USER=$DATABASE_USER
+      - DATABASE_PASSWORD=$DATABASE_PASSWORD
+      - DATABASE_NAME=$DATABASE_NAME
+      - DATABASE_PORT=$DATABASE_PORT
+    stdin_open: true
+    tty: true
+    networks:
+      - hubnetwork
+
+  hubforum-phpmyadmin:
+    container_name: hubforum-phpmyadmin
+    depends_on:
+      - hubforum-db
+    image: phpmyadmin
+    ports:
+    - 8000:80
+    networks:
+      - hubnetwork
+    environment:
+      PMA_HOST: hubforum-db
+
+volumes: 
+  db:
+
+networks:
+  hubnetwork:
