@@ -5,6 +5,7 @@ module.exports = async (req, res, next) =>
     const headers = req.headers;
     const cookies = headers.cookie?.split(';');
     req.cache.islogged = false;
+    let isFatalError = false; 
     if(cookies){
         for(let item of cookies){
             if(item.indexOf("session")>-1){
@@ -29,10 +30,19 @@ module.exports = async (req, res, next) =>
                     }
                 }catch(e){
                     console.log(e);
-                    res.sendStatus(500);
+                    isFatalError = true;
+                    //res.sendStatus(500);
                 }
             }
         }
     }
-    next();
+    if(isFatalError){
+        res.sendStatus(500);
+    }
+    else if(req.cache.islogged){
+        next();
+    }
+    else{
+        res.sendStatus(403);
+    }
 }

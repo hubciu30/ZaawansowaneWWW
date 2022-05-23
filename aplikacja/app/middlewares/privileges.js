@@ -1,5 +1,6 @@
 // get user roles and cache them
 module.exports = async (req, res, next) =>{
+    let isFatalError = false; 
     if(!req.cache){req.cache = {};}
     if(req.cache.islogged){
         req.cache.roles = [];
@@ -11,8 +12,10 @@ module.exports = async (req, res, next) =>{
         }
         catch(e){
             console.log(e);
+            isFatalError = true; 
            // res.sendStatus(500);
         }
     }
-    next();
+    if(isFatalError){ res.sendStatus(500); }
+    else{ next(); }
 }
