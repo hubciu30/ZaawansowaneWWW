@@ -9,7 +9,7 @@ Do zainstalowania zależności: **npm install**
 Plik .env powinien znajdować się w katalogu "aplikacja"
 | Key  | Value |
 | ------------- | ------------- |
-| PORT  | 3000  |
+| PORT_LOCAL  | 3000  |
 | DATABASE_HOST  | x.x.x.x  |
 | DATABASE_USER  | user  |
 | DATABASE_PASSWORD  | *****  |
