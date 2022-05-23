@@ -18,7 +18,9 @@ module.exports = (app)=>
                 }
                 let new_data = []
                 if(req.query.start && req.query.limit){
-                    new_data = data.slice(req.query.start, req.query.limit);
+                    try{
+                        new_data = data.slice(req.query.start, req.query.limit+req.query.start);
+                    }catch{new_data = []}
                 }
                 else{
                     new_data = data;
