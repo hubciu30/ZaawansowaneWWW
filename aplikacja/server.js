@@ -29,7 +29,7 @@ require('./app/routing/signup')(app);
 require('./app/routing/home')(app);
 
 app.get('/', (req, res) => {
-  res.redirect('/home');
+  res.redirect('/login');
 })
 
 httpServer.listen(port, () => {
