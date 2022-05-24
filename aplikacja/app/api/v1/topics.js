@@ -75,7 +75,7 @@ module.exports = (app)=>
                         else{
                             await db.Topics.create(req.body.categorie_id, req.cache.user_id, req.body.title, Date.now());
                             await db.query('UPDATE `categories` SET `topics_count` = topics_count + 1 WHERE `id`=?',[req.body.categorie_id]);
-                            res.sendStatus(200);
+                            res.sendStatus(201);
                         }
                     }
                     catch(e){
@@ -113,7 +113,7 @@ module.exports = (app)=>
                         }
                         else if(response[0].user_id === req.cache.user_id || data.power >= 50){ // autor tematu albo ktos z ranga moderatora lub wiecej
                             await db.Topics.update.title(req.params.id, req.body.title);
-                            res.sendStatus(200);
+                            res.sendStatus(204);
                         }
                         else{
                             res.sendStatus(403);

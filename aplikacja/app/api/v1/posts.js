@@ -76,7 +76,7 @@ module.exports = (app)=>
                             await db.query('UPDATE `topics` SET `posts_count` = posts_count + 1 WHERE `id`=?',[req.body.topic_id]);
                             const categorie_id = response[0].categorie_id;
                             await db.query('UPDATE `categories` SET `last_post_time`=? WHERE `id`=?',[time, categorie_id]);
-                            res.sendStatus(200);
+                            res.sendStatus(201);
                         }
                     }
                     catch(e){
@@ -114,7 +114,7 @@ module.exports = (app)=>
                         }
                         else if(response[0].user_id === req.cache.user_id) {
                             db.Posts.update.content(req.params.id, req.body.content)
-                            res.sendStatus(200);
+                            res.sendStatus(204);
                         }
                         else{
                             res.sendStatus(403);
