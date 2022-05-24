@@ -47,6 +47,18 @@ module.exports = (pool) =>{
             })
         });
     }
+    // categories delete
+    Categories.delete = (id)=>{
+        let sql_string = 'DELETE FROM `categories` WHERE `id`=?';
+        let arguments = [id]
+        return new Promise((resolve, reject) => {
+            pool.query(sql_string, arguments, (error, data) =>{
+                if(error){reject(error);}
+                return resolve(data);
+            })
+        });
+    }
+
     // update object
     Categories.update = {};
     // update name
