@@ -71,7 +71,7 @@ module.exports = (app)=>
                         let response = await db.Categories.getByName(req.body.name);
                         if(response.length === 0){
                             response = await db.Categories.create(req.body.name, Date.now(), null);
-                            res.sendStatus(200);
+                            res.sendStatus(201);
                         }
                         else{
                             res.sendStatus(401);
@@ -109,7 +109,7 @@ module.exports = (app)=>
                         let response = await db.Categories.getByID(req.params.id);
                         if(response.length === 1){
                             response = await db.Categories.update.name(req.params.id, req.body.name);
-                            res.sendStatus(200);
+                            res.sendStatus(204);
                         }
                         else{
                             res.sendStatus(404);
@@ -121,6 +121,39 @@ module.exports = (app)=>
                     }
                 }else{
                     res.sendStatus(400);
+                }
+            }else{
+                res.sendStatus(403);
+            }
+        }
+        else
+        {
+            res.sendStatus(403);
+        }
+    });
+
+    app.delete('/api/categories/:id', auth, privileges, async (req, res) =>
+    {
+        if(req.cache.islogged && req.cache.roles.length>0)
+        {
+            const data = req.cache.roles?.find(item => item.name.toLowerCase()==="admin");
+            if(data)
+            {
+                try
+                {
+                    const db = require('../../database/database');
+                    let response = await db.Categories.getByID(req.params.id);
+                    if(response.length === 1){
+                        response = await db.Categories.delete(req.params.id);
+                        res.sendStatus(200);
+                    }
+                    else{
+                        res.sendStatus(404);
+                    }
+                }
+                catch(e){
+                    console.log(e);
+                    res.sendStatus(500);
                 }
             }else{
                 res.sendStatus(403);
